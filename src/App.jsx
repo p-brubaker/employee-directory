@@ -5,6 +5,7 @@ import Auth from './views/Auth/Auth';
 import Profile from './views/Profile/Profile';
 import Login from './views/Login/Login';
 import Header from './components/Layout/Header/Header';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 
 export default function App() {
   return (
@@ -12,14 +13,22 @@ export default function App() {
       <Header />
       <Router>
         <Switch>
-          <Home exact path="/" />
-          <CreateAccount path="/register">
-            <Auth />
-          </CreateAccount>
-          <Login path="/login">
-            <Auth />
-          </Login>
-          <Profile path="/profile" />
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/register">
+            <CreateAccount>
+              <Auth />
+            </CreateAccount>
+          </Route>
+          <Route path="/login">
+            <Login>
+              <Auth />
+            </Login>
+          </Route>
+          <PrivateRoute path="/profile">
+            <Profile />
+          </PrivateRoute>
         </Switch>
       </Router>
     </>
