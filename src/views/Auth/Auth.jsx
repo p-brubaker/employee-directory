@@ -1,9 +1,9 @@
 import { useForm } from '../../hooks/useForm';
 import { useState } from 'react';
+import { signInUser, signUpUser } from '../../services/users';
 
-export default function Auth({ isSigningUp = false }) {
+export default function Auth({ isSigningUp }) {
   const [user, setUser] = useState(null);
-
   const { formState, formError, handleFormChange, setFormError } = useForm({
     email: '',
     password: '',
@@ -13,15 +13,16 @@ export default function Auth({ isSigningUp = false }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { email, password } = formState;
+    let onSubmit;
+    if (isSigningUp) onSubmit = signUpUser;
+    else onSubmit = signInUser;
 
     try {
       setLoading(true);
-      const user = await onSubmit({
-        email: formState.email,
-        password: formState.password,
-      });
+      const user = await onSubmit(email, password);
       if (user.id) {
         setUser(user);
+        setLoading(false);
       }
     } catch (error) {
       setLoading(false);
@@ -50,7 +51,7 @@ export default function Auth({ isSigningUp = false }) {
         {loading ? (
           <button>Authenticating</button>
         ) : (
-          <button>{isSigningUp ? 'Sign Up' : 'Sign In'}</button>
+          <button type="submit">{isSigningUp ? 'Sign Up' : 'Sign In'}</button>
         )}
         {formError && <p>{formError}</p>}
       </form>

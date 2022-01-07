@@ -6,12 +6,13 @@ import Profile from './views/Profile/Profile';
 import Login from './views/Login/Login';
 import Header from './components/Layout/Header/Header';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import { UserProvider } from './context/UserContext';
 
 export default function App() {
   return (
-    <>
-      <Header />
+    <UserProvider>
       <Router>
+        <Header />
         <Switch>
           <Route exact path="/">
             <Home />
@@ -31,6 +32,6 @@ export default function App() {
           </PrivateRoute>
         </Switch>
       </Router>
-    </>
+    </UserProvider>
   );
 }

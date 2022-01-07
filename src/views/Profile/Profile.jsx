@@ -1,4 +1,5 @@
 import ProfileDetail from '../../components/ProfileDetail/ProfileDetail';
+import CreateProfile from '../CreateProfile/CreateProfile';
 
 export default function Profile({ profile = null }) {
   return (
