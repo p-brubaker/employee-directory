@@ -1,9 +1,12 @@
 import { useForm } from '../../hooks/useForm';
 import { useState } from 'react';
 import { signInUser, signUpUser } from '../../services/users';
+import { useUser } from '../../context/UserContext';
+import { useHistory } from 'react-router-dom';
 
 export default function Auth({ isSigningUp }) {
-  const [user, setUser] = useState(null);
+  const history = useHistory();
+  const { setUser } = useUser();
   const { formState, formError, handleFormChange, setFormError } = useForm({
     email: '',
     password: '',
@@ -22,7 +25,7 @@ export default function Auth({ isSigningUp }) {
       const user = await onSubmit(email, password);
       if (user.id) {
         setUser(user);
-        setLoading(false);
+        history.replace('/profile');
       }
     } catch (error) {
       setLoading(false);
@@ -45,6 +48,7 @@ export default function Auth({ isSigningUp }) {
         <input
           name="password"
           id="password"
+          type="password"
           value={formState.password}
           onChange={(e) => handleFormChange(e)}
         />
