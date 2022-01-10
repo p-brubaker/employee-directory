@@ -59,7 +59,7 @@ export default function Profile() {
         editing={editing}
         setEditing={setEditing}
       />
-      {!editing ? <ProfileDetail profile /> : <></>}
+      {!editing ? <ProfileDetail profile={profile} /> : <></>}
     </div>
   );
 }
